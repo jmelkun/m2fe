@@ -109,16 +109,14 @@ export function Header() {
             <Group gap="md">
               <ActionIcon 
                 variant="subtle" 
-                size="md"
+                size="lg"
                 className={classes.cartButton}
                 aria-label="Shopping cart"
               >
-                <Group gap={6}>
-                  <IconShoppingCart size={22} stroke={1.5} />
-                  {cartItemCount > 0 && (
-                    <Box className={classes.cartBadge}>{cartItemCount}</Box>
-                  )}
-                </Group>
+                <IconShoppingCart size={22} stroke={1.5} />
+                {cartItemCount > 0 && (
+                  <Box className={classes.cartBadge}>{cartItemCount}</Box>
+                )}
               </ActionIcon>
               
               <ActionIcon
