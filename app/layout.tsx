@@ -1,8 +1,7 @@
 import '@mantine/core/styles.css';
-import { ColorSchemeScript } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import { Header } from '@/components/Header/Header';
 import { AuthProvider } from '@/components/Header/AuthProvider';
-import { ThemeProvider } from '@/components/ThemeProvider';
 
 export default function RootLayout({
   children,
@@ -19,12 +18,12 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ThemeProvider>
+        <MantineProvider>
           <AuthProvider>
             <Header />
             <main>{children}</main>
           </AuthProvider>
-        </ThemeProvider>
+        </MantineProvider>
       </body>
     </html>
   );
