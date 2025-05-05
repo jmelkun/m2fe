@@ -5,13 +5,13 @@
     right: 0;
     z-index: 100;
     box-shadow: var(--mantine-shadow-sm);
-    background-color: var(--mantine-color-white);
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
   }
   
   /* Top Layer Styling */
   .topLayer {
-    background-color: var(--mantine-color-gray-0);
-    border-bottom: 1px solid var(--mantine-color-gray-2);
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+    border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-6));
     padding: 8px 0;
   }
   
@@ -20,14 +20,14 @@
   }
   
   .contactInfo {
-    color: var(--mantine-color-gray-7);
+    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-gray-5));
   }
   
   /* Middle Layer Styling */
   .middleLayer {
-    background-color: var(--mantine-color-white);
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
     padding: 16px 0;
-    border-bottom: 1px solid var(--mantine-color-gray-2);
+    border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-6));
   }
   
   .middleLayerInner {
@@ -61,8 +61,8 @@
   
   /* Nav Layer Styling */
   .navLayer {
-    background-color: var(--mantine-color-gray-1);
-    border-bottom: 1px solid var(--mantine-color-gray-3);
+    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
+    border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
   }
   
   .navInner {
@@ -92,7 +92,7 @@
   
   .categoryButton:hover,
   .categoryButton:focus {
-    background-color: var(--mantine-color-gray-2);
+    background-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
   }
   
   .dropdown {
@@ -100,8 +100,8 @@
     top: 100%;
     left: 0;
     z-index: 10;
-    background-color: var(--mantine-color-white);
-    border: 1px solid var(--mantine-color-gray-3);
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+    border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
     border-radius: var(--mantine-radius-sm);
     box-shadow: var(--mantine-shadow-md);
     min-width: 200px;
@@ -118,7 +118,7 @@
   
   .subcategoryButton:hover,
   .subcategoryButton:focus {
-    background-color: var(--mantine-color-gray-1);
+    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
   }
   
   /* Mobile Styles */
@@ -132,13 +132,13 @@
   
   .mobileSearch {
     padding-top: 12px;
-    border-top: 1px solid var(--mantine-color-gray-3);
+    border-top: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
   }
   
   .mobileContactInfo {
     margin-top: 12px;
     padding-top: 12px;
-    border-top: 1px solid var(--mantine-color-gray-3);
+    border-top: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
   }
   
   /* Media Queries for Responsive Design */

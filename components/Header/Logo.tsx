@@ -22,7 +22,7 @@ export function Logo({ height = 30 }: LogoProps) {
         }}
       >
         <span style={{ color: 'var(--mantine-color-blue-6)' }}>Drainage</span>
-        <span style={{ color: 'var(--mantine-color-dark-4)' }}>Connect</span>
+        <span style={{ color: 'var(--mantine-primary-color-light-color)' }}>Connect</span>
       </Text>
     </Box>
   );
