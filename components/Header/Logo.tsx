@@ -1,10 +1,15 @@
-import { Box, Text } from '@mantine/core';
+'use client';
+
+import { Box, Text, useMantineColorScheme } from '@mantine/core';
 
 interface LogoProps {
   height?: number;
 }
 
 export function Logo({ height = 30 }: LogoProps) {
+  const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === 'dark';
+  
   return (
     <Box
       style={{
@@ -22,7 +27,7 @@ export function Logo({ height = 30 }: LogoProps) {
         }}
       >
         <span style={{ color: 'var(--mantine-color-blue-6)' }}>Drainage</span>
-        <span style={{ color: 'var(--mantine-primary-color-light-color)' }}>Connect</span>
+        <span style={{ color: isDark ? 'var(--mantine-color-gray-4)' : 'var(--mantine-color-dark-4)' }}>Connect</span>
       </Text>
     </Box>
   );
