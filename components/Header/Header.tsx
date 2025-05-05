@@ -20,8 +20,11 @@ import {
   IconMail, 
   IconSearch, 
   IconShoppingCart, 
-  IconChevronDown
+  IconChevronDown,
+  IconSun,
+  IconMoon
 } from '@tabler/icons-react';
+import { useMantineColorScheme } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Logo from './Logo'; // You'll need to create this component
 import classes from './Header.module.css';
@@ -40,6 +43,7 @@ export function Header() {
   const { isLoggedIn, cartItemCount, login, signup, logout } = useAuth();
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const { colorScheme, setColorScheme } = useMantineColorScheme();
 
   // Function to handle category hover
   const handleCategoryHover = (category: string) => {
@@ -101,19 +105,34 @@ export function Header() {
               rightSectionWidth={32}
             />
             
-            <ActionIcon 
-              variant="subtle" 
-              radius="xl"
-              className={classes.cartButton}
-              aria-label="Shopping cart"
-            >
-              <Group gap={6}>
-                <IconShoppingCart size={22} stroke={1.5} />
-                {cartItemCount > 0 && (
-                  <Box className={classes.cartBadge}>{cartItemCount}</Box>
+            <Group gap="md">
+              <ActionIcon 
+                variant="subtle" 
+                radius="md"
+                className={classes.cartButton}
+                aria-label="Shopping cart"
+              >
+                <Group gap={6}>
+                  <IconShoppingCart size={22} stroke={1.5} />
+                  {cartItemCount > 0 && (
+                    <Box className={classes.cartBadge}>{cartItemCount}</Box>
+                  )}
+                </Group>
+              </ActionIcon>
+              
+              <ActionIcon
+                variant="subtle"
+                radius="md"
+                onClick={() => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')}
+                aria-label="Toggle color scheme"
+              >
+                {colorScheme === 'dark' ? (
+                  <IconSun size={22} stroke={1.5} />
+                ) : (
+                  <IconMoon size={22} stroke={1.5} />
                 )}
-              </Group>
-            </ActionIcon>
+              </ActionIcon>
+            </Group>
           </Group>
         </Container>
       </Box>

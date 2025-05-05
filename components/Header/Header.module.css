@@ -50,9 +50,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
+    min-width: 18px;
     height: 18px;
-    border-radius: 50%;
+    border-radius: 10px;
+    padding: 0 4px;
     background-color: var(--mantine-color-red-6);
     color: var(--mantine-color-white);
     font-size: 10px;
