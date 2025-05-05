@@ -13,7 +13,8 @@ import {
   Drawer,
   Stack,
   UnstyledButton,
-  Container
+  Container,
+  Anchor
 } from '@mantine/core';
 import { 
   IconPhone, 
@@ -64,11 +65,11 @@ export function Header() {
             <Group gap={20}>
               <Group gap={8}>
                 <IconPhone size={16} stroke={1.5} />
-                <Text size="sm" className={classes.contactInfo}>+1 (555) 123-4567</Text>
+                <Text size="sm" className={classes.contactInfo}><Anchor href="https://mantine.dev/guides/next/" size="md">+1 (803) 324-3225</Anchor></Text>
               </Group>
               <Group gap={8}>
                 <IconMail size={16} stroke={1.5} />
-                <Text size="sm" className={classes.contactInfo}>support@example.com</Text>
+                <Text size="sm" className={classes.contactInfo}><Anchor href="https://mantine.dev/guides/next/" size="md">mail@drainageconnect.com</Anchor></Text>
               </Group>
             </Group>
             
@@ -99,7 +100,7 @@ export function Header() {
             <Logo height={40} />
             
             <TextInput
-              placeholder="Search products..."
+              placeholder="Search Drainage Connect"
               className={classes.search}
               leftSection={<IconSearch size={16} stroke={1.5} />}
               rightSectionWidth={32}
@@ -108,7 +109,7 @@ export function Header() {
             <Group gap="md">
               <ActionIcon 
                 variant="subtle" 
-                radius="md"
+                size="md"
                 className={classes.cartButton}
                 aria-label="Shopping cart"
               >
