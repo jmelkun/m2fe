@@ -11,7 +11,7 @@ export function ClientLayout({
   children: React.ReactNode;
 }) {
   return (
-    <MantineProvider theme={theme} defaultColorScheme="light">
+    <MantineProvider theme={theme} defaultColorScheme="auto">
       <AuthProvider>
         <Header />
         <main>{children}</main>
