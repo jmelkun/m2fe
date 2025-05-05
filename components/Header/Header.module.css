@@ -1,0 +1,179 @@
+.header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    box-shadow: var(--mantine-shadow-sm);
+    background-color: var(--mantine-color-white);
+  }
+  
+  /* Top Layer Styling */
+  .topLayer {
+    background-color: var(--mantine-color-gray-0);
+    border-bottom: 1px solid var(--mantine-color-gray-2);
+    padding: 8px 0;
+  }
+  
+  .topLayerInner {
+    min-height: 28px;
+  }
+  
+  .contactInfo {
+    color: var(--mantine-color-gray-7);
+  }
+  
+  /* Middle Layer Styling */
+  .middleLayer {
+    background-color: var(--mantine-color-white);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--mantine-color-gray-2);
+  }
+  
+  .middleLayerInner {
+    min-height: 40px;
+  }
+  
+  .search {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .cartButton {
+    position: relative;
+  }
+  
+  .cartBadge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--mantine-color-red-6);
+    color: var(--mantine-color-white);
+    font-size: 10px;
+    font-weight: 700;
+  }
+  
+  /* Nav Layer Styling */
+  .navLayer {
+    background-color: var(--mantine-color-gray-1);
+    border-bottom: 1px solid var(--mantine-color-gray-3);
+  }
+  
+  .navInner {
+    height: 42px;
+  }
+  
+  .desktopNav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .categoryContainer {
+    position: relative;
+    height: 42px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .categoryButton {
+    height: 100%;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    transition: background-color 150ms ease;
+  }
+  
+  .categoryButton:hover,
+  .categoryButton:focus {
+    background-color: var(--mantine-color-gray-2);
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    background-color: var(--mantine-color-white);
+    border: 1px solid var(--mantine-color-gray-3);
+    border-radius: var(--mantine-radius-sm);
+    box-shadow: var(--mantine-shadow-md);
+    min-width: 200px;
+    padding: 12px;
+  }
+  
+  .subcategoryButton {
+    width: 100%;
+    text-align: left;
+    padding: 8px 12px;
+    border-radius: var(--mantine-radius-sm);
+    transition: background-color 150ms ease;
+  }
+  
+  .subcategoryButton:hover,
+  .subcategoryButton:focus {
+    background-color: var(--mantine-color-gray-1);
+  }
+  
+  /* Mobile Styles */
+  .burger {
+    display: none;
+  }
+  
+  .mobileDrawer {
+    display: none;
+  }
+  
+  .mobileSearch {
+    padding-top: 12px;
+    border-top: 1px solid var(--mantine-color-gray-3);
+  }
+  
+  .mobileContactInfo {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--mantine-color-gray-3);
+  }
+  
+  /* Media Queries for Responsive Design */
+  @media (max-width: 992px) {
+    .search {
+      max-width: 300px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .desktopNav {
+      display: none;
+    }
+  
+    .burger {
+      display: flex;
+    }
+  
+    .mobileDrawer {
+      display: block;
+    }
+  
+    .search {
+      display: none;
+    }
+  
+    .middleLayerInner {
+      justify-content: space-between;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .topLayerInner {
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+  }
