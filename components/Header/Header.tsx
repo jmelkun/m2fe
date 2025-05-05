@@ -25,7 +25,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import Logo from './Logo'; // You'll need to create this component
 import classes from './Header.module.css';
-import { useAuth } from './AuthProvider';
+import { useAuth } from '@/components/Header/AuthProvider';
 
 // Define your categories
 const categories = [
