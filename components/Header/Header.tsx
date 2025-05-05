@@ -107,17 +107,19 @@ export function Header() {
             />
             
             <Group gap="md">
-              <ActionIcon 
-                variant="subtle" 
-                size="lg"
-                className={classes.cartButton}
-                aria-label="Shopping cart"
-              >
-                <IconShoppingCart size={22} stroke={1.5} />
+              <Box style={{ position: 'relative', marginRight: '5px' }}>
+                <ActionIcon 
+                  variant="subtle" 
+                  size="lg"
+                  className={classes.cartButton}
+                  aria-label="Shopping cart"
+                >
+                  <IconShoppingCart size={22} stroke={1.5} />
+                </ActionIcon>
                 {cartItemCount > 0 && (
                   <Box className={classes.cartBadge}>{cartItemCount}</Box>
                 )}
-              </ActionIcon>
+              </Box>
               
               <ActionIcon
                 variant="subtle"
