@@ -1,7 +1,9 @@
 'use client';
 
-import { Button, Group, useMantineColorScheme } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import { useEffect, useState } from 'react';
+import { useMantineColorScheme } from '@mantine/core';
+import classes from './ColorSchemeToggle.module.css';
 
 export function ColorSchemeToggle() {
   const { setColorScheme, colorScheme } = useMantineColorScheme();
@@ -14,29 +16,31 @@ export function ColorSchemeToggle() {
 
   // Don't render buttons until client-side to avoid hydration mismatch
   if (!mounted) {
-    return <Group justify="center" mt="xl" style={{ height: '36px' }}></Group>;
+    return <div className={classes.placeholder}></div>;
   }
 
   return (
-    <Group justify="center" mt="xl">
-      <Button 
-        onClick={() => setColorScheme('light')}
-        variant={colorScheme === 'light' ? 'filled' : 'outline'}
-      >
-        Light
-      </Button>
-      <Button 
-        onClick={() => setColorScheme('dark')}
-        variant={colorScheme === 'dark' ? 'filled' : 'outline'}
-      >
-        Dark
-      </Button>
-      <Button 
-        onClick={() => setColorScheme('auto')}
-        variant={colorScheme === 'auto' ? 'filled' : 'outline'}
-      >
-        Auto
-      </Button>
-    </Group>
+    <div className={classes.toggleContainer}>
+      <Group>
+        <Button 
+          onClick={() => setColorScheme('light')}
+          className={`${classes.toggleButton} ${colorScheme === 'light' ? classes.active : classes.inactive}`}
+        >
+          Light
+        </Button>
+        <Button 
+          onClick={() => setColorScheme('dark')}
+          className={`${classes.toggleButton} ${colorScheme === 'dark' ? classes.active : classes.inactive}`}
+        >
+          Dark
+        </Button>
+        <Button 
+          onClick={() => setColorScheme('auto')}
+          className={`${classes.toggleButton} ${colorScheme === 'auto' ? classes.active : classes.inactive}`}
+        >
+          Auto
+        </Button>
+      </Group>
+    </div>
   );
 }
