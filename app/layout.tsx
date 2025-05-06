@@ -3,10 +3,12 @@ import '@mantine/core/styles.css';
 import React from 'react';
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { theme } from '../theme';
+import { AuthProvider } from '@/components/Header/AuthProvider';
+import { Header } from '@/components/Header/Header';
 
 export const metadata = {
-  title: 'Mantine Next.js template',
-  description: 'I am using Mantine with Next.js!',
+  title: 'Drainage Connect',
+  description: 'Your one-stop shop for drainage solutions',
 };
 
 export default function RootLayout({ children }: { children: any }) {
@@ -22,7 +24,10 @@ export default function RootLayout({ children }: { children: any }) {
       </head>
       <body>
         <MantineProvider theme={theme}>
-          {children}
+          <AuthProvider>
+            <Header />
+            {children}
+          </AuthProvider>
         </MantineProvider>
       </body>
     </html>
