@@ -1,33 +1,22 @@
 'use client';
 
-import { Box, Text, useMantineColorScheme } from '@mantine/core';
+import { Box, Text } from '@mantine/core';
+import classes from './Logo.module.css';
 
 interface LogoProps {
   height?: number;
 }
 
 export function Logo({ height = 30 }: LogoProps) {
-  const { colorScheme } = useMantineColorScheme();
-  const isDark = colorScheme === 'dark';
-  
   return (
-    <Box
-      style={{
-        height,
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
+    <Box className={classes.logoContainer} style={{ height }}>
       <Text
-        fw={700}
+        className={classes.logoText}
         size="xl"
-        style={{
-          fontSize: height * 0.6,
-          letterSpacing: -0.5,
-        }}
+        style={{ fontSize: height * 0.6 }}
       >
-        <span style={{ color: 'var(--mantine-color-blue-6)' }}>Drainage</span>
-        <span style={{ color: isDark ? 'var(--mantine-color-gray-4)' : 'var(--mantine-color-dark-4)' }}>Connect</span>
+        <span className={classes.logoFirstPart}>Drainage</span>
+        <span className={classes.logoSecondPart}>Connect</span>
       </Text>
     </Box>
   );

@@ -1,0 +1,18 @@
+.logoContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.logoText {
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.logoFirstPart {
+  color: var(--mantine-color-blue-6);
+}
+
+.logoSecondPart {
+  color: light-dark(var(--mantine-color-dark-4), var(--mantine-color-gray-4));
+}

@@ -39,6 +39,17 @@ const categories = [
 ];
 
 export function Header() {
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
+  const { cartItemCount } = useAuth();
+
+  const handleCategoryHover = (category: string) => {
+    setActiveCategory(category);
+  };
+
+  const handleCategoryLeave = () => {
+    setActiveCategory(null);
+  };
 
   return (
     <header className={classes.header}>
@@ -76,10 +87,18 @@ export function Header() {
               leftSection={<IconSearch size={16} stroke={1.5} />}
               rightSectionWidth={32}
             />
-            <Box style={{ position: 'relative' }}>
-              <ActionIcon variant="subtle" size="lg" className={classes.cartButton} aria-label="Shopping cart">
+            <Box style={{ position: 'relative', marginRight: '5px' }}>
+              <ActionIcon 
+                variant="subtle" 
+                size="lg"
+                className={classes.cartButton}
+                aria-label="Shopping cart"
+              >
                 <IconShoppingCart size={22} stroke={1.5} />
               </ActionIcon>
+              {cartItemCount > 0 && (
+                <Box className={classes.cartBadge}>{cartItemCount}</Box>
+              )}
             </Box>
           </Group>
         </Container>
