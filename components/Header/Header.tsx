@@ -47,9 +47,11 @@ export function Header() {
   };
 
   const handleCategoryLeave = () => {
-    setActiveCategory(null);
-    setActiveSubcategory(null);
-    setActiveThirdLevel(null);
+    setTimeout(() => {
+      setActiveCategory(null);
+      setActiveSubcategory(null);
+      setActiveThirdLevel(null);
+    }, 200);
   };
   
   const handleSubcategoryHover = (subcategoryId: string) => {
@@ -184,7 +186,7 @@ export function Header() {
                       aria-controls={`dropdown-${category.id}`}
                     >
                       <Group gap={4}>
-                        <Text size="sm" fw={500}>{category.label}</Text>
+                        <Text size="md" fw={500}>{category.label}</Text>
                         <IconChevronDown size={16} stroke={1.5} />
                       </Group>
                     </UnstyledButton>
@@ -209,7 +211,7 @@ export function Header() {
                               onMouseEnter={() => handleSubcategoryHover(parent.id)}
                               onMouseLeave={handleSubcategoryLeave}
                             >
-                              <Text size="sm">{parent.label}</Text>
+                              <Text size="md">View All</Text>
                             </UnstyledButton>
                             
                             {/* Show flyout for second level categories */}
@@ -233,7 +235,7 @@ export function Header() {
                                       onMouseEnter={() => handleThirdLevelHover(child.id)}
                                       onMouseLeave={handleThirdLevelLeave}
                                     >
-                                      <Text size="sm">{child.label}</Text>
+                                      <Text size="md">{child.label}</Text>
                                       
                                       {/* Show flyout for third level categories */}
                                       {activeThirdLevel === child.id && hasChildren && (
@@ -250,7 +252,7 @@ export function Header() {
                                               component="a"
                                               href={fourthLevel.href}
                                             >
-                                              <Text size="sm">{fourthLevel.label}</Text>
+                                              <Text size="md">{fourthLevel.label}</Text>
                                             </UnstyledButton>
                                           ))}
                                         </div>

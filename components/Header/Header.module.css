@@ -95,7 +95,8 @@
     transition: all 150ms ease;
     border-radius: 0;
     position: relative;
-    margin: 0 2px;
+    margin: 0 8px;
+    font-size: 1.1rem;
   }
   
   .categoryButton:hover,
@@ -177,23 +178,25 @@
   
   .subcategoryHeading {
     font-weight: 600;
-    padding: 8px 12px;
-    margin-bottom: 4px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
     color: var(--mantine-color-blue-6);
     border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+    font-size: 1.05rem;
   }
   
   .subcategoryButton {
     width: 100%;
     text-align: left;
-    padding: 8px 12px;
+    padding: 10px 12px;
     border-radius: var(--mantine-radius-sm);
     transition: all 150ms ease;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
     position: relative;
+    font-size: 1rem;
   }
   
   .subcategoryButton:hover,
@@ -236,8 +239,9 @@
   }
   
   .mobileSubcategory {
-    padding: 10px 16px 10px 24px;
+    padding: 12px 16px 12px 24px;
     transition: background-color 150ms ease;
+    font-size: 1.05rem;
   }
   
   .mobileSearch {
