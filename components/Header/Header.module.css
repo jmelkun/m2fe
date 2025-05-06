@@ -151,6 +151,21 @@
     animation: fadeIn 200ms ease;
   }
   
+  .nestedFlyout {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 12;
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+    border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+    border-radius: var(--mantine-radius-sm);
+    box-shadow: var(--mantine-shadow-md);
+    min-width: 220px;
+    padding: 12px;
+    margin-left: 4px;
+    animation: fadeIn 200ms ease;
+  }
+  
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
@@ -178,12 +193,12 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 2px;
+    position: relative;
   }
   
   .subcategoryButton:hover,
   .subcategoryButton:focus {
     background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
-    transform: translateX(4px);
   }
   
   .hasChildren {

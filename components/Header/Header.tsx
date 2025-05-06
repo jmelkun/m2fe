@@ -33,6 +33,7 @@ import { useNavigationStore } from '@/store/navigation-store';
 export function Header() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
+  const [activeThirdLevel, setActiveThirdLevel] = useState<string | null>(null);
   const [expandedSubcategories, setExpandedSubcategories] = useState<Record<string, boolean>>({});
   const flyoutTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
@@ -42,11 +43,13 @@ export function Header() {
   const handleCategoryHover = (categoryId: string) => {
     setActiveCategory(categoryId);
     setActiveSubcategory(null);
+    setActiveThirdLevel(null);
   };
 
   const handleCategoryLeave = () => {
     setActiveCategory(null);
     setActiveSubcategory(null);
+    setActiveThirdLevel(null);
   };
   
   const handleSubcategoryHover = (subcategoryId: string) => {
@@ -55,11 +58,26 @@ export function Header() {
       flyoutTimeoutRef.current = null;
     }
     setActiveSubcategory(subcategoryId);
+    setActiveThirdLevel(null);
   };
   
   const handleSubcategoryLeave = () => {
     flyoutTimeoutRef.current = setTimeout(() => {
       setActiveSubcategory(null);
+    }, 100);
+  };
+  
+  const handleThirdLevelHover = (itemId: string) => {
+    if (flyoutTimeoutRef.current) {
+      clearTimeout(flyoutTimeoutRef.current);
+      flyoutTimeoutRef.current = null;
+    }
+    setActiveThirdLevel(itemId);
+  };
+  
+  const handleThirdLevelLeave = () => {
+    flyoutTimeoutRef.current = setTimeout(() => {
+      setActiveThirdLevel(null);
     }, 100);
   };
 
@@ -182,50 +200,64 @@ export function Header() {
                           <div key={parent.id} className={classes.subcategoryGroup}>
                             <Text className={classes.subcategoryHeading}>{parent.label}</Text>
                             
+                            {/* Parent category is clickable */}
                             <UnstyledButton 
-                              className={classes.subcategoryButton}
+                              className={`${classes.subcategoryButton} ${children.length > 0 ? classes.hasChildren : ''}`}
                               role="menuitem"
                               component="a"
                               href={parent.href}
+                              onMouseEnter={() => handleSubcategoryHover(parent.id)}
+                              onMouseLeave={handleSubcategoryLeave}
                             >
-                              <Text size="sm">View All</Text>
+                              <Text size="sm">{parent.label}</Text>
                             </UnstyledButton>
                             
-                            {children.length > 0 && (
-                              <div className={classes.flyoutContainer}>
-                                {children.map(child => (
-                                  <UnstyledButton 
-                                    key={child.id}
-                                    className={`${classes.subcategoryButton} ${children.length > 0 ? classes.hasChildren : ''}`}
-                                    role="menuitem"
-                                    component="a"
-                                    href={child.href}
-                                    onMouseEnter={() => handleSubcategoryHover(child.id)}
-                                    onMouseLeave={handleSubcategoryLeave}
-                                  >
-                                    <Text size="sm">{child.label}</Text>
-                                    
-                                    {activeSubcategory === child.id && (
-                                      <div 
-                                        className={classes.flyout}
-                                        onMouseEnter={() => handleSubcategoryHover(child.id)}
-                                        onMouseLeave={handleSubcategoryLeave}
-                                      >
-                                        <UnstyledButton 
-                                          className={classes.subcategoryButton}
-                                          role="menuitem"
-                                          component="a"
-                                          href={child.href}
+                            {/* Show flyout for second level categories */}
+                            {activeSubcategory === parent.id && children.length > 0 && (
+                              <div 
+                                className={classes.flyout}
+                                onMouseEnter={() => handleSubcategoryHover(parent.id)}
+                                onMouseLeave={handleSubcategoryLeave}
+                              >
+                                {children.map(child => {
+                                  // Check if this child has children (4th level)
+                                  const hasChildren = child.children && child.children.length > 0;
+                                  
+                                  return (
+                                    <UnstyledButton 
+                                      key={child.id}
+                                      className={`${classes.subcategoryButton} ${hasChildren ? classes.hasChildren : ''}`}
+                                      role="menuitem"
+                                      component="a"
+                                      href={child.href}
+                                      onMouseEnter={() => handleThirdLevelHover(child.id)}
+                                      onMouseLeave={handleThirdLevelLeave}
+                                    >
+                                      <Text size="sm">{child.label}</Text>
+                                      
+                                      {/* Show flyout for third level categories */}
+                                      {activeThirdLevel === child.id && hasChildren && (
+                                        <div 
+                                          className={classes.nestedFlyout}
+                                          onMouseEnter={() => handleThirdLevelHover(child.id)}
+                                          onMouseLeave={handleThirdLevelLeave}
                                         >
-                                          <Text size="sm" fw={500}>All {child.label}</Text>
-                                        </UnstyledButton>
-                                        
-                                        {/* This is where 4th level categories would go */}
-                                        {/* We can add them here when needed */}
-                                      </div>
-                                    )}
-                                  </UnstyledButton>
-                                ))}
+                                          {child.children?.map(fourthLevel => (
+                                            <UnstyledButton 
+                                              key={fourthLevel.id}
+                                              className={classes.subcategoryButton}
+                                              role="menuitem"
+                                              component="a"
+                                              href={fourthLevel.href}
+                                            >
+                                              <Text size="sm">{fourthLevel.label}</Text>
+                                            </UnstyledButton>
+                                          ))}
+                                        </div>
+                                      )}
+                                    </UnstyledButton>
+                                  );
+                                })}
                               </div>
                             )}
                           </div>
