@@ -136,6 +136,7 @@ export function Header() {
                               role="menuitem"
                               component="a"
                               href={subcategory.href}
+                              style={subcategory.level === 2 ? { paddingLeft: '24px', fontSize: '0.9em' } : {}}
                             >
                               {subcategory.label}
                             </UnstyledButton>
@@ -184,6 +185,7 @@ export function Header() {
                     key={subcategory.id}
                     component="a"
                     href={subcategory.href}
+                    style={subcategory.level === 2 ? { paddingLeft: '24px', fontSize: '0.9em' } : {}}
                   >
                     {subcategory.label}
                   </Menu.Item>

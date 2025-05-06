@@ -109,7 +109,7 @@
     border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
     border-radius: var(--mantine-radius-sm);
     box-shadow: var(--mantine-shadow-md);
-    min-width: 200px;
+    min-width: 250px;
     padding: 12px;
   }
   

@@ -30,11 +30,32 @@ function transformCategories(categoryData: any): Category[] {
   }
 
   return categoryData.category.children.map((child: any, index: number) => {
-    const subcategories: Subcategory[] = child.children.map((subcat: any, subIndex: number) => ({
-      id: `${index}-${subIndex}`,
-      label: subcat.name,
-      href: `/${child.url_key}/${subcat.url_key}`
-    }));
+    const subcategories: Subcategory[] = [];
+    
+    // Process second level categories
+    child.children.forEach((subcat: any, subIndex: number) => {
+      // Add the second level category
+      const subcategoryId = `${index}-${subIndex}`;
+      subcategories.push({
+        id: subcategoryId,
+        label: subcat.name,
+        href: `/${child.url_key}/${subcat.url_key}`,
+        level: 1
+      });
+      
+      // Process third level categories if they exist
+      if (subcat.children && subcat.children.length > 0) {
+        subcat.children.forEach((thirdLevel: any, thirdIndex: number) => {
+          subcategories.push({
+            id: `${subcategoryId}-${thirdIndex}`,
+            label: thirdLevel.name,
+            href: `/${child.url_key}/${subcat.url_key}/${thirdLevel.url_key}`,
+            parentId: subcategoryId,
+            level: 2
+          });
+        });
+      }
+    });
 
     return {
       id: `category-${index}`,

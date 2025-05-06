@@ -10,6 +10,8 @@ export interface Subcategory {
   id: string;
   label: string;
   href: string;
+  parentId?: string; // Optional reference to parent subcategory
+  level?: number;    // Level in hierarchy (1 for direct child, 2 for grandchild)
 }
 
 interface NavigationState {
