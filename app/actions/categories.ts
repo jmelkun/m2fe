@@ -40,25 +40,45 @@ function transformCategories(categoryData: any): Category[] {
     child.children.forEach((subcat: any, subIndex: number) => {
       // Add the second level category
       const subcategoryId = `${index}-${subIndex}`;
-      subcategories.push({
+      const level1Item: Subcategory = {
         id: subcategoryId,
         label: subcat.name,
         href: `/${child.url_key}/${subcat.url_key}`,
-        level: 1
-      });
+        level: 1,
+        children: []
+      };
       
       // Process third level categories if they exist
       if (subcat.children && subcat.children.length > 0) {
         subcat.children.forEach((thirdLevel: any, thirdIndex: number) => {
-          subcategories.push({
-            id: `${subcategoryId}-${thirdIndex}`,
+          const level2Id = `${subcategoryId}-${thirdIndex}`;
+          const level2Item: Subcategory = {
+            id: level2Id,
             label: thirdLevel.name,
             href: `/${child.url_key}/${subcat.url_key}/${thirdLevel.url_key}`,
             parentId: subcategoryId,
-            level: 2
-          });
+            level: 2,
+            children: []
+          };
+          
+          // Process fourth level categories if they exist
+          if (thirdLevel.children && thirdLevel.children.length > 0) {
+            thirdLevel.children.forEach((fourthLevel: any, fourthIndex: number) => {
+              level2Item.children?.push({
+                id: `${level2Id}-${fourthIndex}`,
+                label: fourthLevel.name,
+                href: `/${child.url_key}/${subcat.url_key}/${thirdLevel.url_key}/${fourthLevel.url_key}`,
+                parentId: level2Id,
+                level: 3
+              });
+            });
+          }
+          
+          subcategories.push(level2Item);
         });
       }
+      
+      subcategories.push(level1Item);
     });
 
     return {

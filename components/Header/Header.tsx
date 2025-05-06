@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { 
   Box, 
   Group,
@@ -32,17 +32,35 @@ import { useNavigationStore } from '@/store/navigation-store';
 
 export function Header() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
   const [expandedSubcategories, setExpandedSubcategories] = useState<Record<string, boolean>>({});
+  const flyoutTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const { cartItemCount } = useAuth();
   const { categories } = useNavigationStore();
 
   const handleCategoryHover = (categoryId: string) => {
     setActiveCategory(categoryId);
+    setActiveSubcategory(null);
   };
 
   const handleCategoryLeave = () => {
     setActiveCategory(null);
+    setActiveSubcategory(null);
+  };
+  
+  const handleSubcategoryHover = (subcategoryId: string) => {
+    if (flyoutTimeoutRef.current) {
+      clearTimeout(flyoutTimeoutRef.current);
+      flyoutTimeoutRef.current = null;
+    }
+    setActiveSubcategory(subcategoryId);
+  };
+  
+  const handleSubcategoryLeave = () => {
+    flyoutTimeoutRef.current = setTimeout(() => {
+      setActiveSubcategory(null);
+    }, 100);
   };
 
   const toggleSubcategory = (subcategoryId: string) => {
@@ -174,16 +192,38 @@ export function Header() {
                             </UnstyledButton>
                             
                             {children.length > 0 && (
-                              <div className={classes.nestedItems}>
+                              <div className={classes.flyoutContainer}>
                                 {children.map(child => (
                                   <UnstyledButton 
                                     key={child.id}
-                                    className={classes.subcategoryButton}
+                                    className={`${classes.subcategoryButton} ${children.length > 0 ? classes.hasChildren : ''}`}
                                     role="menuitem"
                                     component="a"
                                     href={child.href}
+                                    onMouseEnter={() => handleSubcategoryHover(child.id)}
+                                    onMouseLeave={handleSubcategoryLeave}
                                   >
                                     <Text size="sm">{child.label}</Text>
+                                    
+                                    {activeSubcategory === child.id && (
+                                      <div 
+                                        className={classes.flyout}
+                                        onMouseEnter={() => handleSubcategoryHover(child.id)}
+                                        onMouseLeave={handleSubcategoryLeave}
+                                      >
+                                        <UnstyledButton 
+                                          className={classes.subcategoryButton}
+                                          role="menuitem"
+                                          component="a"
+                                          href={child.href}
+                                        >
+                                          <Text size="sm" fw={500}>All {child.label}</Text>
+                                        </UnstyledButton>
+                                        
+                                        {/* This is where 4th level categories would go */}
+                                        {/* We can add them here when needed */}
+                                      </div>
+                                    )}
                                   </UnstyledButton>
                                 ))}
                               </div>

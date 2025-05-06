@@ -89,12 +89,13 @@
   
   .categoryButton {
     height: 100%;
-    padding: 0 16px;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     transition: all 150ms ease;
     border-radius: 0;
     position: relative;
+    margin: 0 2px;
   }
   
   .categoryButton:hover,
@@ -131,6 +132,25 @@
     animation: fadeIn 200ms ease;
   }
   
+  .flyoutContainer {
+    position: relative;
+  }
+  
+  .flyout {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 11;
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+    border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+    border-radius: var(--mantine-radius-sm);
+    box-shadow: var(--mantine-shadow-md);
+    min-width: 220px;
+    padding: 12px;
+    margin-left: 4px;
+    animation: fadeIn 200ms ease;
+  }
+  
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
@@ -157,6 +177,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 2px;
   }
   
   .subcategoryButton:hover,
@@ -165,10 +186,16 @@
     transform: translateX(4px);
   }
   
-  .nestedItems {
-    padding-left: 12px;
-    margin-top: 4px;
-    border-left: 2px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+  .hasChildren {
+    position: relative;
+  }
+  
+  .hasChildren::after {
+    content: '›';
+    position: absolute;
+    right: 12px;
+    font-size: 16px;
+    color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-gray-4));
   }
   
   /* Mobile Styles */
