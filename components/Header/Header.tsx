@@ -24,7 +24,7 @@ import {
   IconChevronDown,
 } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
-import Logo from './Logo'; // You'll need to create this component
+import Logo from './Logo';
 import classes from './Header.module.css';
 import { useAuth } from '@/components/Header/AuthProvider';
 import { ColorSchemeToggle } from '@/components/ColorSchemeToggle/ColorSchemeToggle';
