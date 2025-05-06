@@ -1,27 +1,20 @@
-.toggleContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--mantine-spacing-xl);
-}
-
-.toggleButton {
-  transition: all 0.2s ease;
-}
-
-.toggleButton.active {
-  background-color: var(--mantine-primary-color-filled);
-  color: var(--mantine-color-white);
-}
-
-.toggleButton.inactive {
-  background-color: transparent;
-  border-color: var(--mantine-primary-color-filled);
-  color: var(--mantine-primary-color-filled);
-}
-
-.placeholder {
-  height: 36px;
-  display: flex;
-  justify-content: center;
-  margin-top: var(--mantine-spacing-xl);
-}
+.icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  
+  .dark {
+    display: none;
+  }
+  
+  .light {
+    display: block;
+  }
+  
+  :global([data-mantine-color-scheme="dark"]) .dark {
+    display: block;
+  }
+  
+  :global([data-mantine-color-scheme="dark"]) .light {
+    display: none;
+  }

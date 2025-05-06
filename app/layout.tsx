@@ -5,8 +5,7 @@ import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/c
 import { theme } from '../theme';
 import { AuthProvider } from '@/components/Header/AuthProvider';
 import { Header } from '@/components/Header/Header';
-import { getCategories } from './actions/categories';
-import { NavigationProvider } from '@/components/Header/NavigationProvider';
+import { headerCategories } from '@/lib/actions/categories/headerCategories';
 
 export const metadata = {
   title: 'Drainage Connect',
@@ -14,8 +13,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }: { children: any }) {
-  // Fetch categories on the server
-  const categories = await getCategories();
+  const categories = await headerCategories();
   
   return (
     <html lang="en" {...mantineHtmlProps}>
@@ -30,10 +28,8 @@ export default async function RootLayout({ children }: { children: any }) {
       <body>
         <MantineProvider theme={theme}>
           <AuthProvider>
-            <NavigationProvider initialCategories={categories}>
-              <Header />
-              {children}
-            </NavigationProvider>
+            <Header categories={categories} />
+            {children}
           </AuthProvider>
         </MantineProvider>
       </body>
