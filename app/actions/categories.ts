@@ -16,6 +16,10 @@ const CATEGORY_QUERY = `
           children {
             name
             url_key
+             children {
+              name
+              url_key
+            }
           }
         }
       }
