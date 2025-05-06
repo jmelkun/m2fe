@@ -66,7 +66,7 @@ export function Header() {
   const handleSubcategoryLeave = () => {
     flyoutTimeoutRef.current = setTimeout(() => {
       setActiveSubcategory(null);
-    }, 100);
+    }, 300);
   };
   
   const handleThirdLevelHover = (itemId: string) => {
@@ -80,7 +80,7 @@ export function Header() {
   const handleThirdLevelLeave = () => {
     flyoutTimeoutRef.current = setTimeout(() => {
       setActiveThirdLevel(null);
-    }, 100);
+    }, 300);
   };
 
   const toggleSubcategory = (subcategoryId: string) => {
