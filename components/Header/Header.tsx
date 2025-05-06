@@ -22,14 +22,12 @@ import {
   IconSearch, 
   IconShoppingCart, 
   IconChevronDown,
-  IconSun,
-  IconMoon
 } from '@tabler/icons-react';
-import { useMantineColorScheme } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Logo from './Logo'; // You'll need to create this component
 import classes from './Header.module.css';
 import { useAuth } from '@/components/Header/AuthProvider';
+import { ColorSchemeToggle } from '@/components/ColorSchemeToggle/ColorSchemeToggle';
 
 // Define your categories
 const categories = [
@@ -41,20 +39,6 @@ const categories = [
 ];
 
 export function Header() {
-  const { isLoggedIn, cartItemCount, login, signup, logout } = useAuth();
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const { colorScheme, setColorScheme } = useMantineColorScheme();
-
-  // Function to handle category hover
-  const handleCategoryHover = (category: string) => {
-    setActiveCategory(category);
-  };
-
-  // Function to handle category leave
-  const handleCategoryLeave = () => {
-    setActiveCategory(null);
-  };
 
   return (
     <header className={classes.header}>
@@ -65,93 +49,47 @@ export function Header() {
             <Group gap={20}>
               <Group gap={8}>
                 <IconPhone size={16} stroke={1.5} />
-                <Text size="sm" className={classes.contactInfo}><Anchor href="https://mantine.dev/guides/next/" size="md">+1 (803) 324-3225</Anchor></Text>
+                <Text size="sm" className={classes.contactInfo}><Anchor href="tel:+18033243225" size="md">+1 (803) 324-3225</Anchor></Text>
               </Group>
               <Group gap={8}>
                 <IconMail size={16} stroke={1.5} />
-                <Text size="sm" className={classes.contactInfo}><Anchor href="https://mantine.dev/guides/next/" size="md">mail@drainageconnect.com</Anchor></Text>
+                <Text size="sm" className={classes.contactInfo}><Anchor href="mailto:mail@drainageconnect.com" size="md">mail@drainageconnect.com</Anchor></Text>
               </Group>
             </Group>
-            
+
             <Group>
-              {isLoggedIn ? (
-                <Button variant="subtle" size="sm" onClick={logout}>
-                  Log Out
-                </Button>
-              ) : (
-                <Group gap={12}>
-                  <Button variant="subtle" size="sm" onClick={login}>
-                    Log In
-                  </Button>
-                  <Button size="sm" onClick={signup}>
-                    Sign Up
-                  </Button>
-                </Group>
-              )}
+              {/* Add the ColorSchemeToggle to the top bar */}
+              <ColorSchemeToggle />
             </Group>
           </Group>
         </Container>
       </Box>
-      
+
       {/* Middle Layer */}
       <Box className={classes.middleLayer}>
         <Container size="xl">
           <Group justify="space-between" className={classes.middleLayerInner}>
             <Logo height={40} />
-            
             <TextInput
               placeholder="Search Drainage Connect"
               className={classes.search}
               leftSection={<IconSearch size={16} stroke={1.5} />}
               rightSectionWidth={32}
             />
-            
-            <Group gap="md">
-              <Box style={{ position: 'relative', marginRight: '5px' }}>
-                <ActionIcon 
-                  variant="subtle" 
-                  size="lg"
-                  className={classes.cartButton}
-                  aria-label="Shopping cart"
-                >
-                  <IconShoppingCart size={22} stroke={1.5} />
-                </ActionIcon>
-                {cartItemCount > 0 && (
-                  <Box className={classes.cartBadge}>{cartItemCount}</Box>
-                )}
-              </Box>
-              
-              <ActionIcon
-                variant="subtle"
-                radius="md"
-                onClick={() => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')}
-                aria-label="Toggle color scheme"
-              >
-                {colorScheme === 'dark' ? (
-                  <IconSun size={22} stroke={1.5} />
-                ) : (
-                  <IconMoon size={22} stroke={1.5} />
-                )}
+            <Box style={{ position: 'relative' }}>
+              <ActionIcon variant="subtle" size="lg" className={classes.cartButton} aria-label="Shopping cart">
+                <IconShoppingCart size={22} stroke={1.5} />
               </ActionIcon>
-            </Group>
+            </Box>
           </Group>
         </Container>
       </Box>
-      
-      {/* Bottom Layer - Navigation */}
+
+      {/* Bottom Layer */}
       <Box className={classes.navLayer}>
         <Container size="xl">
           <Group className={classes.navInner}>
-            {/* Mobile burger menu */}
-            <Burger
-              opened={drawerOpened}
-              onClick={toggleDrawer}
-              className={classes.burger}
-              size="sm"
-              aria-label="Toggle navigation"
-            />
-            
-            {/* Desktop navigation */}
+            <Burger opened={drawerOpened} onClick={toggleDrawer} className={classes.burger} size="sm" aria-label="Toggle navigation" />
             <nav className={classes.desktopNav}>
               <Group gap={0}>
                 {categories.map((category) => (
@@ -198,8 +136,8 @@ export function Header() {
           </Group>
         </Container>
       </Box>
-      
-      {/* Mobile Navigation Drawer */}
+
+      {/* Drawer */}
       <Drawer
         opened={drawerOpened}
         onClose={closeDrawer}
@@ -233,26 +171,6 @@ export function Header() {
               </Menu.Dropdown>
             </Menu>
           ))}
-          
-          <Box className={classes.mobileSearch}>
-            <TextInput
-              placeholder="Search products..."
-              leftSection={<IconSearch size={16} stroke={1.5} />}
-              size="md"
-              w="100%"
-            />
-          </Box>
-          
-          <Group className={classes.mobileContactInfo}>
-            <Group gap={8}>
-              <IconPhone size={16} stroke={1.5} />
-              <Text size="sm">+1 (555) 123-4567</Text>
-            </Group>
-            <Group gap={8}>
-              <IconMail size={16} stroke={1.5} />
-              <Text size="sm">support@example.com</Text>
-            </Group>
-          </Group>
         </Stack>
       </Drawer>
     </header>
