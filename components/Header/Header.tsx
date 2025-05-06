@@ -32,6 +32,7 @@ import { useNavigationStore } from '@/store/navigation-store';
 
 export function Header() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [expandedSubcategories, setExpandedSubcategories] = useState<Record<string, boolean>>({});
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const { cartItemCount } = useAuth();
   const { categories } = useNavigationStore();
@@ -42,6 +43,35 @@ export function Header() {
 
   const handleCategoryLeave = () => {
     setActiveCategory(null);
+  };
+
+  const toggleSubcategory = (subcategoryId: string) => {
+    setExpandedSubcategories(prev => ({
+      ...prev,
+      [subcategoryId]: !prev[subcategoryId]
+    }));
+  };
+
+  // Group subcategories by parent
+  const getGroupedSubcategories = (categoryId: string) => {
+    const category = categories.find(cat => cat.id === categoryId);
+    if (!category) return [];
+
+    // Get all level 1 subcategories
+    const parentSubcategories = category.subcategories.filter(sub => sub.level === 1);
+    
+    // Create groups
+    return parentSubcategories.map(parent => {
+      // Find all children of this parent
+      const children = category.subcategories.filter(
+        sub => sub.parentId === parent.id && sub.level === 2
+      );
+      
+      return {
+        parent,
+        children
+      };
+    });
   };
 
   return (
@@ -102,7 +132,7 @@ export function Header() {
         <Container size="xl">
           <Group className={classes.navInner}>
             <Burger opened={drawerOpened} onClick={toggleDrawer} className={classes.burger} size="sm" aria-label="Toggle navigation" />
-            <nav className={classes.desktopNav}>
+            <nav className={classes.desktopNav} aria-label="Main Navigation">
               <Group gap={0}>
                 {categories.map((category) => (
                   <Box 
@@ -112,36 +142,54 @@ export function Header() {
                     onMouseLeave={handleCategoryLeave}
                   >
                     <UnstyledButton 
-                      className={classes.categoryButton}
+                      className={`${classes.categoryButton} ${activeCategory === category.id ? classes.categoryButtonActive : ''}`}
                       aria-haspopup="true"
                       aria-expanded={activeCategory === category.id}
+                      aria-controls={`dropdown-${category.id}`}
                     >
                       <Group gap={4}>
-                        <Text size="sm">{category.label}</Text>
+                        <Text size="sm" fw={500}>{category.label}</Text>
                         <IconChevronDown size={16} stroke={1.5} />
                       </Group>
                     </UnstyledButton>
                     
                     {activeCategory === category.id && (
                       <div 
+                        id={`dropdown-${category.id}`}
                         className={classes.dropdown}
                         role="menu"
                         aria-label={`${category.label} submenu`}
                       >
-                        <Stack gap={8}>
-                          {category.subcategories.map((subcategory) => (
+                        {getGroupedSubcategories(category.id).map(({ parent, children }) => (
+                          <div key={parent.id} className={classes.subcategoryGroup}>
+                            <Text className={classes.subcategoryHeading}>{parent.label}</Text>
+                            
                             <UnstyledButton 
-                              key={subcategory.id}
                               className={classes.subcategoryButton}
                               role="menuitem"
                               component="a"
-                              href={subcategory.href}
-                              style={subcategory.level === 2 ? { paddingLeft: '24px', fontSize: '0.9em' } : {}}
+                              href={parent.href}
                             >
-                              {subcategory.label}
+                              <Text size="sm">View All</Text>
                             </UnstyledButton>
-                          ))}
-                        </Stack>
+                            
+                            {children.length > 0 && (
+                              <div className={classes.nestedItems}>
+                                {children.map(child => (
+                                  <UnstyledButton 
+                                    key={child.id}
+                                    className={classes.subcategoryButton}
+                                    role="menuitem"
+                                    component="a"
+                                    href={child.href}
+                                  >
+                                    <Text size="sm">{child.label}</Text>
+                                  </UnstyledButton>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ))}
                       </div>
                     )}
                   </Box>
@@ -156,7 +204,7 @@ export function Header() {
       <Drawer
         opened={drawerOpened}
         onClose={closeDrawer}
-        title="Navigation"
+        title={<Text fw={700} size="lg">Navigation</Text>}
         size="100%"
         padding="md"
         className={classes.mobileDrawer}
@@ -164,34 +212,86 @@ export function Header() {
       >
         <Stack gap="md">
           {categories.map((category) => (
-            <Menu 
-              key={category.id}
-              position="bottom-start"
-              offset={4}
-              withArrow
-              trigger="hover"
-              openDelay={0}
-              closeDelay={200}
-            >
-              <Menu.Target>
-                <Button variant="subtle" fullWidth justify="space-between">
-                  {category.label}
-                  <IconChevronDown size={16} stroke={1.5} />
-                </Button>
-              </Menu.Target>
-              <Menu.Dropdown>
-                {category.subcategories.map((subcategory) => (
-                  <Menu.Item 
-                    key={subcategory.id}
-                    component="a"
-                    href={subcategory.href}
-                    style={subcategory.level === 2 ? { paddingLeft: '24px', fontSize: '0.9em' } : {}}
-                  >
-                    {subcategory.label}
-                  </Menu.Item>
-                ))}
-              </Menu.Dropdown>
-            </Menu>
+            <Box key={category.id}>
+              <Button 
+                variant="subtle" 
+                fullWidth 
+                justify="space-between"
+                onClick={() => toggleSubcategory(category.id)}
+                aria-expanded={!!expandedSubcategories[category.id]}
+                aria-controls={`mobile-dropdown-${category.id}`}
+              >
+                <Text fw={600}>{category.label}</Text>
+                <IconChevronDown 
+                  size={16} 
+                  stroke={1.5} 
+                  style={{ 
+                    transform: expandedSubcategories[category.id] ? 'rotate(180deg)' : 'none',
+                    transition: 'transform 200ms ease'
+                  }} 
+                />
+              </Button>
+              
+              {expandedSubcategories[category.id] && (
+                <Box 
+                  id={`mobile-dropdown-${category.id}`}
+                  p="xs" 
+                  pl="md"
+                >
+                  {getGroupedSubcategories(category.id).map(({ parent, children }) => (
+                    <Box key={parent.id} mb="sm">
+                      <Button
+                        variant="subtle"
+                        color="blue"
+                        fullWidth
+                        justify="space-between"
+                        component="a"
+                        href={parent.href}
+                        mb={4}
+                        onClick={(e) => {
+                          if (children.length > 0) {
+                            e.preventDefault();
+                            toggleSubcategory(parent.id);
+                          }
+                        }}
+                      >
+                        <Text fw={500}>{parent.label}</Text>
+                        {children.length > 0 && (
+                          <IconChevronDown 
+                            size={14} 
+                            stroke={1.5} 
+                            style={{ 
+                              transform: expandedSubcategories[parent.id] ? 'rotate(180deg)' : 'none',
+                              transition: 'transform 200ms ease'
+                            }} 
+                          />
+                        )}
+                      </Button>
+                      
+                      {expandedSubcategories[parent.id] && children.length > 0 && (
+                        <Box pl="md" style={{ borderLeft: '2px solid var(--mantine-color-gray-3)' }}>
+                          {children.map(child => (
+                            <Button
+                              key={child.id}
+                              variant="subtle"
+                              color="gray"
+                              fullWidth
+                              justify="flex-start"
+                              component="a"
+                              href={child.href}
+                              mb={4}
+                              leftSection={<Box w={8} h={8} style={{ backgroundColor: 'var(--mantine-color-blue-5)', borderRadius: '50%' }} />}
+                            >
+                              <Text size="sm">{child.label}</Text>
+                            </Button>
+                          ))}
+                        </Box>
+                      )}
+                    </Box>
+                  ))}
+                </Box>
+              )}
+            </Box>
           ))}
         </Stack>
       </Drawer>
