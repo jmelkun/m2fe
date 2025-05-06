@@ -162,43 +162,35 @@ export function Header() {
         zIndex={1000}
       >
         <Stack gap="md">
-          {loading ? (
-            <Group justify="center">
-              <Loader size="sm" />
-            </Group>
-          ) : error ? (
-            <Text c="dimmed" size="sm">{error}</Text>
-          ) : (
-            categories.map((category) => (
-              <Menu 
-                key={category.id}
-                position="bottom-start"
-                offset={4}
-                withArrow
-                trigger="hover"
-                openDelay={0}
-                closeDelay={200}
-              >
-                <Menu.Target>
-                  <Button variant="subtle" fullWidth justify="space-between">
-                    {category.label}
-                    <IconChevronDown size={16} stroke={1.5} />
-                  </Button>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  {category.subcategories.map((subcategory) => (
-                    <Menu.Item 
-                      key={subcategory.id}
-                      component="a"
-                      href={subcategory.href}
-                    >
-                      {subcategory.label}
-                    </Menu.Item>
-                  ))}
-                </Menu.Dropdown>
-              </Menu>
-            ))
-          )}
+          {categories.map((category) => (
+            <Menu 
+              key={category.id}
+              position="bottom-start"
+              offset={4}
+              withArrow
+              trigger="hover"
+              openDelay={0}
+              closeDelay={200}
+            >
+              <Menu.Target>
+                <Button variant="subtle" fullWidth justify="space-between">
+                  {category.label}
+                  <IconChevronDown size={16} stroke={1.5} />
+                </Button>
+              </Menu.Target>
+              <Menu.Dropdown>
+                {category.subcategories.map((subcategory) => (
+                  <Menu.Item 
+                    key={subcategory.id}
+                    component="a"
+                    href={subcategory.href}
+                  >
+                    {subcategory.label}
+                  </Menu.Item>
+                ))}
+              </Menu.Dropdown>
+            </Menu>
+          ))}
         </Stack>
       </Drawer>
     </header>
