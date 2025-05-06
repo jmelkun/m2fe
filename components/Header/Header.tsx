@@ -200,8 +200,6 @@ export function Header() {
                       >
                         {getGroupedSubcategories(category.id).map(({ parent, children }) => (
                           <div key={parent.id} className={classes.subcategoryGroup}>
-                            <Text className={classes.subcategoryHeading}>{parent.label}</Text>
-                            
                             {/* Parent category is clickable */}
                             <UnstyledButton 
                               className={`${classes.subcategoryButton} ${children.length > 0 ? classes.hasChildren : ''}`}
@@ -211,7 +209,7 @@ export function Header() {
                               onMouseEnter={() => handleSubcategoryHover(parent.id)}
                               onMouseLeave={handleSubcategoryLeave}
                             >
-                              <Text size="md">{parent.label}</Text>
+                              <Text size="md" fw={600}>{parent.label}</Text>
                             </UnstyledButton>
                             
                             {/* Show flyout for second level categories */}
