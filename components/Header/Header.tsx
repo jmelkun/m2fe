@@ -211,7 +211,7 @@ export function Header() {
                               onMouseEnter={() => handleSubcategoryHover(parent.id)}
                               onMouseLeave={handleSubcategoryLeave}
                             >
-                              <Text size="md">View All</Text>
+                              <Text size="md">{parent.label}</Text>
                             </UnstyledButton>
                             
                             {/* Show flyout for second level categories */}
