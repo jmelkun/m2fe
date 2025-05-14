@@ -1,4 +1,3 @@
-// MobileNavDrawer.tsx - Mobile navigation drawer
 'use client';
 
 import { useState } from 'react';
@@ -10,9 +9,11 @@ import {
   Group, 
   Text,
   UnstyledButton,
-  Collapse
+  Collapse,
+  Loader,
+  Center
 } from '@mantine/core';
-import { CategoryNode } from './NavigationMenu';
+import { CategoryNode } from '@/lib/actions/categories/HeaderCategories';
 import { IconChevronDown, IconPhone, IconMail } from '@tabler/icons-react';
 import { ColorSchemeToggle } from '@/components/ColorSchemeToggle/ColorSchemeToggle';
 import classes from './Header.module.css';
@@ -21,9 +22,10 @@ interface MobileNavDrawerProps {
   opened: boolean;
   onClose: () => void;
   categories: CategoryNode[];
+  loading?: boolean;
 }
 
-export function MobileNavDrawer({ opened, onClose, categories }: MobileNavDrawerProps) {
+export function MobileNavDrawer({ opened, onClose, categories, loading = false }: MobileNavDrawerProps) {
   // Store state of which category is expanded
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
@@ -33,7 +35,7 @@ export function MobileNavDrawer({ opened, onClose, categories }: MobileNavDrawer
   };
 
   // Recursive function to render categories and their children
-  const renderCategoryTree = (category: CategoryNode, level = 0): JSX.Element => {
+  const renderCategoryTree = (category: CategoryNode, level = 0) => {
     const hasChildren = (category.children?.length ?? 0) > 0;
     const isExpanded = expandedCategory === category.url_key;
     const url = `/${category.url_key}`;
@@ -107,7 +109,14 @@ export function MobileNavDrawer({ opened, onClose, categories }: MobileNavDrawer
         
         {/* Categories navigation */}
         <Text size="sm" fw={700} p="xs">Categories</Text>
-        {categories.map(category => renderCategoryTree(category))}
+        
+        {loading ? (
+          <Center p="xl">
+            <Loader size="sm" />
+          </Center>
+        ) : (
+          categories.map(category => renderCategoryTree(category))
+        )}
         
         <Divider my="sm" />
         

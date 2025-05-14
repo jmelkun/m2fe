@@ -1,101 +1,70 @@
+// components/Header/Header.tsx
 'use client';
 
-import { useState, useRef } from 'react';
-import {
-  Box,
-  Group,
-  Container,
-  Text,
-  TextInput,
-  ActionIcon,
-  UnstyledButton,
-} from '@mantine/core';
-import { IconPhone, IconMail, IconSearch, IconShoppingCart } from '@tabler/icons-react';
-import { ColorSchemeToggle } from '@/components/ColorSchemeToggle/ColorSchemeToggle';
-import Logo from './Logo';
-import { NavigationMenu, CategoryNode } from '@/components/Header/NavigationMenu'; 
-import { useAuth } from '@/components/Header/AuthProvider'; 
+import { useState } from 'react';
+import { Box, Container, useMantineTheme } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
+import { AnnouncementBar } from './AnnouncementBar';
+import { ContentBar } from './ContentBar';
+import { NavigationBar } from './NavigationBar';
+import { MobileNavDrawer } from './MobileNavDrawer';
+import { MobileSearchOverlay } from './MobileSearchOverlay';
+import { CartDrawer } from './CartDrawer';
+import { CategoryNode } from '@/lib/actions/categories/HeaderCategories';
 import classes from './Header.module.css';
 
 interface HeaderProps {
-  categories?: CategoryNode[];
+  categories: CategoryNode[];
 }
 
 export function Header({ categories }: HeaderProps) {
-  const { cartItemCount } = useAuth();
-  const [searchQuery, setSearchQuery] = useState('');
-  const searchInputRef = useRef<HTMLInputElement>(null);
-
+  const theme = useMantineTheme();
+  // Ensure isMobile is always a boolean with default value
+  const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.md})`);
+  const isMobile = isMobileQuery !== undefined ? isMobileQuery : false;
+  
+  // State for mobile interactions
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
+  const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+  
   return (
     <header className={classes.header}>
-      {/* --- Top Layer --- */}
-      <Box className={classes.topLayer}>
-        <Container size="xl">
-          <Group justify="space-between" className={classes.topLayerInner}>
-            <Group gap={20}>
-              <Group gap={8}>
-                <IconPhone size={16} stroke={1.5} />
-                <Text size="sm" className={classes.contactInfo}>
-                  <a href="tel:+18033243225">+1 (803) 324-3225</a>
-                </Text>
-              </Group>
-              <Group gap={8}>
-                <IconMail size={16} stroke={1.5} />
-                <Text size="sm" className={classes.contactInfo}>
-                  <a href="mailto:mail@drainageconnect.com">mail@drainageconnect.com</a>
-                </Text>
-              </Group>
-            </Group>
-
-            <Group>
-              <ColorSchemeToggle />
-            </Group>
-          </Group>
-        </Container>
-      </Box>
-
-      {/* --- Middle Layer --- */}
-      <Box className={classes.middleLayer}>
-        <Container size="xl">
-          <Group justify="space-between" className={classes.middleLayerInner}>
-            <Logo height={40} />
-
-            <TextInput
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.currentTarget.value)}
-              placeholder="Search Drainage Connect"
-              className={classes.search}
-              leftSection={<IconSearch size={16} stroke={1.5} />}
-              ref={searchInputRef}
-              rightSectionWidth={32}
-            />
-
-            <Box style={{ position: 'relative', marginRight: '5px' }}>
-              <ActionIcon
-                variant="subtle"
-                size="lg"
-                className={classes.cartButton}
-                aria-label="Shopping cart"
-              >
-                <IconShoppingCart size={22} stroke={1.5} />
-              </ActionIcon>
-              {cartItemCount > 0 && (
-                <Box className={classes.cartBadge}>{cartItemCount}</Box>
-              )}
-            </Box>
-          </Group>
-        </Container>
-      </Box>
-
-      {/* --- Bottom Layer (Navigation) --- */}
-      <Box className={classes.navLayer}>
-        <Container size="xl">
-          <Group className={classes.navInner}>
-            {/* Here is the Premium Navigation Menu */}
-            <NavigationMenu categories={categories ?? []} />
-          </Group>
-        </Container>
-      </Box>
+      {/* Announcement Bar - Shown on both desktop and mobile */}
+      <AnnouncementBar />
+      
+      {/* Content Bar - Different layout for mobile vs desktop */}
+      <ContentBar 
+        isMobile={isMobile}
+        onOpenMobileNav={() => setMobileNavOpen(true)}
+        onOpenSearch={() => setSearchOverlayOpen(true)}
+        onOpenCart={() => setCartDrawerOpen(true)}
+      />
+      
+      {/* Navigation Bar - Only shown on desktop */}
+      {!isMobile && <NavigationBar categories={categories} />}
+      
+      {/* Mobile-only components */}
+      {isMobile && (
+        <>
+          <MobileNavDrawer 
+            opened={mobileNavOpen} 
+            onClose={() => setMobileNavOpen(false)}
+            categories={categories}
+          />
+          
+          <MobileSearchOverlay
+            opened={searchOverlayOpen}
+            onClose={() => setSearchOverlayOpen(false)}
+          />
+        </>
+      )}
+      
+      {/* Cart Drawer - Used on both mobile and desktop */}
+      <CartDrawer 
+        opened={cartDrawerOpen}
+        onClose={() => setCartDrawerOpen(false)}
+      />
     </header>
   );
 }

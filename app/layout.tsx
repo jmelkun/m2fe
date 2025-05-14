@@ -3,9 +3,8 @@ import '@mantine/core/styles.css';
 import React from 'react';
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { theme } from '../theme';
-import { AuthProvider } from '@/components/Header/AuthProvider';
 import { Header } from '@/components/Header/Header';
-import { headerCategories } from '@/lib/actions/categories/headerCategories';
+import { headerCategories } from '@/lib/actions/categories/HeaderCategories';
 
 export const metadata = {
   title: 'Drainage Connect',
@@ -27,10 +26,8 @@ export default async function RootLayout({ children }: { children: any }) {
       </head>
       <body>
         <MantineProvider theme={theme}>
-          <AuthProvider>
             <Header categories={categories} />
             {children}
-          </AuthProvider>
         </MantineProvider>
       </body>
     </html>

@@ -24,7 +24,7 @@ const CATEGORY_QUERY = `
   }
 `;
 
-interface CategoryNode {
+export interface CategoryNode {
   name: string;
   url_key: string;
   children?: CategoryNode[];
@@ -40,16 +40,17 @@ export async function headerCategories(): Promise<CategoryNode[]> {
       body: JSON.stringify({ query: CATEGORY_QUERY }),
       cache: 'force-cache',
     });
-
+    
     if (!response.ok) {
       throw new Error('Failed to fetch categories');
     }
-
+    
     const data = await response.json();
+    
     if (data.errors) {
       throw new Error(data.errors[0].message);
     }
-
+    
     return data.data.category.children || [];
   } catch (error) {
     console.error('Error fetching categories:', error);
