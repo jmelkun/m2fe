@@ -1,47 +1,99 @@
 'use client';
 
-import { Box, Group, Container } from '@mantine/core';
-import Logo from './Logo';
-import { AuthProvider } from '@/components/Header/AuthProvider';
+import { useState, useRef } from 'react';
+import {
+  Box,
+  Group,
+  Container,
+  Text,
+  TextInput,
+  ActionIcon,
+  UnstyledButton,
+} from '@mantine/core';
+import { IconPhone, IconMail, IconSearch, IconShoppingCart } from '@tabler/icons-react';
 import { ColorSchemeToggle } from '@/components/ColorSchemeToggle/ColorSchemeToggle';
-import { NavigationMenu } from '@/components/Header/NavigationMenu'; 
+import Logo from './Logo';
+import { NavigationMenu, CategoryNode } from '@/components/Header/NavigationMenu'; 
+import { useAuth } from '@/components/Header/AuthProvider'; 
+import classes from './Header.module.css';
 
-interface CategoryNode {
-  name: string;
-  url_key: string;
-  children?: CategoryNode[];
+interface HeaderProps {
+  categories?: CategoryNode[];
 }
 
-export function Header({ categories }: { categories: CategoryNode[] }) {
+export function Header({ categories }: HeaderProps) {
+  const { cartItemCount } = useAuth();
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
   return (
-    <header>
-      {/* Top layer with contact info, color scheme toggle */}
-      <Box>
+    <header className={classes.header}>
+      {/* --- Top Layer --- */}
+      <Box className={classes.topLayer}>
         <Container size="xl">
-          <Group justify="space-between">
+          <Group justify="space-between" className={classes.topLayerInner}>
             <Group gap={20}>
-              {/* Phone and Email icons */}
+              <Group gap={8}>
+                <IconPhone size={16} stroke={1.5} />
+                <Text size="sm" className={classes.contactInfo}>
+                  <a href="tel:+18033243225">+1 (803) 324-3225</a>
+                </Text>
+              </Group>
+              <Group gap={8}>
+                <IconMail size={16} stroke={1.5} />
+                <Text size="sm" className={classes.contactInfo}>
+                  <a href="mailto:mail@drainageconnect.com">mail@drainageconnect.com</a>
+                </Text>
+              </Group>
             </Group>
-            <ColorSchemeToggle />
+
+            <Group>
+              <ColorSchemeToggle />
+            </Group>
           </Group>
         </Container>
       </Box>
 
-      {/* Middle layer with logo, search bar, cart */}
-      <Box>
+      {/* --- Middle Layer --- */}
+      <Box className={classes.middleLayer}>
         <Container size="xl">
-          <Group justify="space-between">
+          <Group justify="space-between" className={classes.middleLayerInner}>
             <Logo height={40} />
-            {/* Search bar */}
-            {/* Cart button */}
+
+            <TextInput
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.currentTarget.value)}
+              placeholder="Search Drainage Connect"
+              className={classes.search}
+              leftSection={<IconSearch size={16} stroke={1.5} />}
+              ref={searchInputRef}
+              rightSectionWidth={32}
+            />
+
+            <Box style={{ position: 'relative', marginRight: '5px' }}>
+              <ActionIcon
+                variant="subtle"
+                size="lg"
+                className={classes.cartButton}
+                aria-label="Shopping cart"
+              >
+                <IconShoppingCart size={22} stroke={1.5} />
+              </ActionIcon>
+              {cartItemCount > 0 && (
+                <Box className={classes.cartBadge}>{cartItemCount}</Box>
+              )}
+            </Box>
           </Group>
         </Container>
       </Box>
 
-      {/* Bottom layer — Navigation */}
-      <Box>
+      {/* --- Bottom Layer (Navigation) --- */}
+      <Box className={classes.navLayer}>
         <Container size="xl">
-          <NavigationMenu categories={categories ?? []} />
+          <Group className={classes.navInner}>
+            {/* Here is the Premium Navigation Menu */}
+            <NavigationMenu categories={categories ?? []} />
+          </Group>
         </Container>
       </Box>
     </header>
