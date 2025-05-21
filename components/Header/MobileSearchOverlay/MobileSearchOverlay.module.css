@@ -1,0 +1,24 @@
+.searchOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 80px;
+}
+
+.searchOverlayInner {
+  position: relative;
+  z-index: 201;
+  width: 90%;
+  max-width: 600px;
+}
+
+.mobileSearch {
+  padding-top: 12px;
+  border-top: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+}

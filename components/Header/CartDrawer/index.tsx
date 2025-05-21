@@ -15,6 +15,7 @@ import {
 } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useAuth } from '@/hooks/useAuth';
+import classes from './CartDrawer.module.css';
 
 interface CartDrawerProps {
   opened: boolean;
@@ -39,7 +40,7 @@ export function CartDrawer({ opened, onClose }: CartDrawerProps) {
       padding="md"
       size="md"
       position="right"
-      zIndex={1000}
+      className={classes.cartDrawer}
     >
       <Stack h="100%" justify="space-between">
         <Stack gap="md">
@@ -47,7 +48,7 @@ export function CartDrawer({ opened, onClose }: CartDrawerProps) {
             <Text ta="center" py="xl">Your cart is empty</Text>
           ) : (
             cartItems.map((item) => (
-              <Box key={item.id}>
+              <Box key={item.id} className={classes.cartItemContainer}>
                 <Group wrap="nowrap" align="flex-start">
                   <Image
                     src={item.image}
@@ -56,11 +57,12 @@ export function CartDrawer({ opened, onClose }: CartDrawerProps) {
                     height={80}
                     fit="contain"
                     fallbackSrc="/placeholder-product.svg"
+                    className={classes.cartItemImage}
                   />
                   
-                  <Stack gap="xs" style={{ flex: 1 }}>
-                    <Text size="sm" fw={500}>{item.name}</Text>
-                    <Text size="sm" c="dimmed">${item.price.toFixed(2)}</Text>
+                  <Stack gap="xs" className={classes.cartItemDetails}>
+                    <Text size="sm" className={classes.cartItemName}>{item.name}</Text>
+                    <Text size="sm" c="dimmed" className={classes.cartItemPrice}>${item.price.toFixed(2)}</Text>
                     
                     <Group>
                       <NumberInput
@@ -68,7 +70,7 @@ export function CartDrawer({ opened, onClose }: CartDrawerProps) {
                         onChange={(value) => updateCartItem(item.id, Number(value))}
                         min={1}
                         max={99}
-                        style={{ width: '80px' }}
+                        className={classes.cartItemQuantity}
                         size="xs"
                       />
                       
@@ -83,7 +85,7 @@ export function CartDrawer({ opened, onClose }: CartDrawerProps) {
                     </Group>
                   </Stack>
                   
-                  <Text fw={500}>
+                  <Text className={classes.cartItemTotal}>
                     ${(item.price * item.quantity).toFixed(2)}
                   </Text>
                 </Group>
@@ -94,7 +96,7 @@ export function CartDrawer({ opened, onClose }: CartDrawerProps) {
         </Stack>
         
         {cartItems.length > 0 && (
-          <Stack gap="md">
+          <Stack gap="md" className={classes.cartSummary}>
             <Stack gap="xs">
               <Group justify="space-between">
                 <Text size="sm">Subtotal</Text>
@@ -114,8 +116,8 @@ export function CartDrawer({ opened, onClose }: CartDrawerProps) {
               <Divider my="xs" />
               
               <Group justify="space-between">
-                <Text fw={700}>Total</Text>
-                <Text fw={700}>${total.toFixed(2)}</Text>
+                <Text className={classes.cartTotal}>Total</Text>
+                <Text className={classes.cartTotal}>${total.toFixed(2)}</Text>
               </Group>
             </Stack>
             

@@ -5,7 +5,7 @@ import { Box, Container, Group, TextInput, ActionIcon, Burger } from '@mantine/c
 import { IconSearch, IconShoppingCart } from '@tabler/icons-react';
 import Logo from '../Logo/';
 import { useAuth } from '@/hooks/useAuth'; 
-import classes from '../styles.module.css';
+import classes from './ContentBar.module.css';
 
 interface ContentBarProps {
   isMobile: boolean;

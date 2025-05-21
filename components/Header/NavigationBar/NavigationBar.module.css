@@ -1,0 +1,8 @@
+.navLayer {
+  background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+}
+
+.navInner {
+  height: 42px;
+}

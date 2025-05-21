@@ -1,0 +1,44 @@
+.mobileDrawer {
+  display: none;
+}
+
+.mobileCategory {
+  border-radius: var(--mantine-radius-sm);
+  overflow: hidden;
+  margin-bottom: 8px;
+  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+}
+
+.mobileCategoryHeader {
+  background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
+  padding: 12px 16px;
+  font-weight: 600;
+}
+
+.mobileSubcategory {
+  padding: 12px 16px 12px 24px;
+  transition: background-color 150ms ease;
+  font-size: 1.05rem;
+}
+
+.mobileContactInfo {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+}
+
+.languageButton {
+  padding: 8px;
+  border-radius: var(--mantine-radius-sm);
+  transition: background-color 150ms ease;
+}
+
+.languageButton:hover {
+  background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
+}
+
+@media (max-width: 768px) {
+  .mobileDrawer {
+    display: block;
+  }
+}

@@ -1,0 +1,41 @@
+.cartDrawer {
+  z-index: 1000;
+}
+
+.cartItemContainer {
+  margin-bottom: 16px;
+}
+
+.cartItemImage {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.cartItemDetails {
+  flex: 1;
+}
+
+.cartItemName {
+  font-weight: 500;
+}
+
+.cartItemPrice {
+  color: var(--mantine-color-dimmed);
+}
+
+.cartItemQuantity {
+  width: 80px;
+}
+
+.cartItemTotal {
+  font-weight: 500;
+}
+
+.cartSummary {
+  margin-top: auto;
+}
+
+.cartTotal {
+  font-weight: 700;
+}

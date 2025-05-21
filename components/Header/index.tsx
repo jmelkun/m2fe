@@ -11,7 +11,7 @@ import { MobileNavDrawer } from './MobileNavDrawer';
 import { MobileSearchOverlay } from './MobileSearchOverlay';
 import { CartDrawer } from './CartDrawer';
 import { CategoryNode } from '@/lib/actions/categories/HeaderCategories';
-import classes from './styles.module.css';
+import classes from './Header.module.css';
 
 interface HeaderProps {
   categories: CategoryNode[];

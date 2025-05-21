@@ -4,7 +4,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Overlay, TextInput, ActionIcon, Box } from '@mantine/core';
 import { IconSearch, IconX } from '@tabler/icons-react';
-import classes from '../styles.module.css';
+import classes from './MobileSearchOverlay.module.css';
 
 interface MobileSearchOverlayProps {
   opened: boolean;

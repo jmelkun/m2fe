@@ -16,7 +16,7 @@ import {
 import { CategoryNode } from '@/lib/actions/categories/HeaderCategories';
 import { IconChevronDown, IconPhone, IconMail } from '@tabler/icons-react';
 import { ColorSchemeToggle } from '@/components/ColorSchemeToggle/ColorSchemeToggle';
-import classes from '../styles.module.css';
+import classes from './MobileNavDrawer.module.css';
 
 interface MobileNavDrawerProps {
   opened: boolean;
