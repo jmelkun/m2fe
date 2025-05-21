@@ -5,7 +5,7 @@ import { IconPhone, IconMail } from '@tabler/icons-react';
 import { ColorSchemeToggle } from '@/components/ColorSchemeToggle/ColorSchemeToggle';
 import { useMediaQuery } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/core';
-import classes from './Header.module.css';
+import classes from '../styles.module.css';
 
 export function AnnouncementBar() {
   const theme = useMantineTheme();

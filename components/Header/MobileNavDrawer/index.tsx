@@ -16,7 +16,7 @@ import {
 import { CategoryNode } from '@/lib/actions/categories/HeaderCategories';
 import { IconChevronDown, IconPhone, IconMail } from '@tabler/icons-react';
 import { ColorSchemeToggle } from '@/components/ColorSchemeToggle/ColorSchemeToggle';
-import classes from './Header.module.css';
+import classes from '../styles.module.css';
 
 interface MobileNavDrawerProps {
   opened: boolean;
@@ -78,37 +78,13 @@ export function MobileNavDrawer({ opened, onClose, categories, loading = false }
     <Drawer
       opened={opened}
       onClose={onClose}
-      title="Menu"
       padding="md"
       size="xs"
       position="left"
     >
-      <Stack>
-        {/* User account section - placeholder */}
-        <NavLink
-          label="My Account"
-          onClick={onClose}
-          component="a"
-          href="/account"
-        />
-        
-        <Divider my="sm" />
-        
-        {/* Settings section */}
-        <Group p="xs">
-          <Text size="sm" fw={500}>Theme</Text>
-          <ColorSchemeToggle />
-        </Group>
-        
-        {/* Language toggle placeholder */}
-        <UnstyledButton className={classes.languageButton} p="xs">
-          <Text size="sm">Language: English</Text>
-        </UnstyledButton>
-        
-        <Divider my="sm" />
-        
+      <Stack>        
         {/* Categories navigation */}
-        <Text size="sm" fw={700} p="xs">Categories</Text>
+        <Text size="md" fw={700}>Categories</Text>
         
         {loading ? (
           <Center p="xl">
@@ -121,22 +97,44 @@ export function MobileNavDrawer({ opened, onClose, categories, loading = false }
         <Divider my="sm" />
         
         {/* Contact information */}
-        <Stack gap="xs" p="xs">
-          <Text size="sm" fw={700}>Contact Us</Text>
+        <Stack gap="xs" >
+          <Text size="md" fw={700}>Contact Us</Text>
           
-          <Group gap={8} wrap="nowrap">
+          <Group gap={8} wrap="nowrap" p="xs">
             <IconPhone size={16} stroke={1.5} />
             <Text size="sm" component="a" href="tel:+18033243225">
               +1 (803) 324-3225
             </Text>
           </Group>
           
-          <Group gap={8} wrap="nowrap">
+          <Group gap={8} wrap="nowrap" p="xs">
             <IconMail size={16} stroke={1.5} />
             <Text size="sm" component="a" href="mailto:mail@drainageconnect.com">
               mail@drainageconnect.com
             </Text>
           </Group>
+        </Stack>
+        <Stack gap="xs" >
+                  <Text size="md" fw={700}>Account Info</Text>
+                {/* User account section - placeholder */}
+        <NavLink
+          label="My Account"
+          onClick={onClose}
+          component="a"
+          href="/account"
+        />
+        
+        {/* Settings section */}
+        <Group p="xs">
+          <Text size="sm" fw={500}>Light / Dark Toggle</Text>
+          <ColorSchemeToggle />
+        </Group>
+        
+        {/* Language toggle placeholder */}
+        <UnstyledButton className={classes.languageButton} p="xs">
+          <Text size="sm">Language: English</Text>
+        </UnstyledButton>
+        
         </Stack>
       </Stack>
     </Drawer>

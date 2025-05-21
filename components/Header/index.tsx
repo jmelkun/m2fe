@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Box, Container, useMantineTheme } from '@mantine/core';
+import { useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { AnnouncementBar } from './AnnouncementBar';
 import { ContentBar } from './ContentBar';
@@ -11,7 +11,7 @@ import { MobileNavDrawer } from './MobileNavDrawer';
 import { MobileSearchOverlay } from './MobileSearchOverlay';
 import { CartDrawer } from './CartDrawer';
 import { CategoryNode } from '@/lib/actions/categories/HeaderCategories';
-import classes from './Header.module.css';
+import classes from './styles.module.css';
 
 interface HeaderProps {
   categories: CategoryNode[];

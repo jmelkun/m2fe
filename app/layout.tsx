@@ -3,7 +3,7 @@ import '@mantine/core/styles.css';
 import React from 'react';
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { theme } from '../theme';
-import { Header } from '@/components/Header/Header';
+import { Header } from '@/components/Header';
 import { headerCategories } from '@/lib/actions/categories/HeaderCategories';
 
 export const metadata = {

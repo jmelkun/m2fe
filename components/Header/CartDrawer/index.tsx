@@ -15,7 +15,6 @@ import {
 } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useAuth } from '@/hooks/useAuth';
-import classes from './Header.module.css';
 
 interface CartDrawerProps {
   opened: boolean;

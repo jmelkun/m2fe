@@ -1,9 +1,9 @@
 'use client';
 
 import { Box, Container, Group } from '@mantine/core';
-import { NavigationMenu } from './NavigationMenu'; 
+import { NavigationMenu } from '../NavigationMenu/'; 
 import { CategoryNode } from '@/lib/actions/categories/HeaderCategories';
-import classes from './Header.module.css';
+import classes from '../styles.module.css';
 
 interface NavigationBarProps {
   categories: CategoryNode[];
